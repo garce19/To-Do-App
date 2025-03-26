@@ -20,6 +20,12 @@ const TaskSchema = new mongoose.Schema({
     dueDate: {
         type: Date,
         required: [true, "Please provide a due date"],
+        validate: {
+            validator: function (value) {
+                return value > Date.now();
+            },
+            message: "Due date must be in the future",
+        }
     },
     completed: {
         type: Boolean,
