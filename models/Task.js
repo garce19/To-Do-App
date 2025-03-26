@@ -17,6 +17,20 @@ const TaskSchema = new mongoose.Schema({
         enum: Object.values(TaskStatus),
         default: TaskStatus.ACTIVE,
     },
+    dueDate: {
+        type: Date,
+        required: [true, "Please provide a due date"],
+    },
+    completed: {
+        type: Boolean,
+        default: false,
+    },
+    priority: {
+        type: Number,
+        required: [true, "Please provide a priority"],
+        min: 1,
+        max: 5,
+    },
 },
     { timestamps: true }
 );
