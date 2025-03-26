@@ -4,7 +4,7 @@ import * as taskController from '../controllers/taskController.js';
 const router = Router();
 
 router.get('/', taskController.getTasks);
-router.get("/status/:status", taskController.getTasksByStatus);
+router.get("/status", taskController.getTasksByStatus);
 router.get("/:id", taskController.getTask);
 router.get("/priority/:priority", taskController.getTasksByPriority);
 router.get("/completed", taskController.getTasksByCompletion);

@@ -25,9 +25,18 @@ export const getTask = async (req, res) => {
 
 export const getTasksByStatus = async (req, res) => {
     try {
-        const { status } = req.params;
-        const tasks = await Task.find({ status });
-        res.status(200).json({ tasks });
+        let { status } = req.query;
+        if (!status) {
+            return res.status(400).json({ message: "Please provide a status" });
+        }
+
+        status = status.toUpperCase();
+        if (!Object.values(TaskStatus).includes(status)) {
+            return res.status(400).json({ message: `Invalid status. Use instead: ${Object.values(TaskStatus).join(', ')}` });
+        }
+
+        const task = await Task.find({ status });
+        res.status(200).json({ task });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -35,9 +44,18 @@ export const getTasksByStatus = async (req, res) => {
 
 export const getTasksByPriority = async (req, res) => {
     try {
-        const { priority } = req.params;
-        const tasks = await Task.find({ priority });
-        res.status(200).json({ tasks });
+        let { priority } = req.query;
+        if (!priority) {
+            return res.status(400).json({ message: "Please provide a priority (from 1 to 5)" });
+        }
+
+        priority = Number(priority);
+        if (isNaN(priority) || priority < 1 || priority > 5) {
+            return res.status(400).json({ message: "Invalid priority. Please provide a number from 1 to 5" });
+        }
+
+        const task = await Task.find({ priority });
+        res.status(200).json({ task });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
