@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TaskStatusEnum } from "../constants/TaskStatusEnum";
+import { TaskStatus } from "../constants/taskStatus.js";
 
 const TaskSchema = new mongoose.Schema({
     title: {
@@ -14,10 +14,11 @@ const TaskSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: Object.values(TaskStatusEnum),
-        default: TaskStatusEnum.ACTIVE,
+        enum: Object.values(TaskStatus),
+        default: TaskStatus.ACTIVE,
     },
-    timestamps: true
-});
+},
+    { timestamps: true }
+);
 
 export default mongoose.model("Task", TaskSchema);
