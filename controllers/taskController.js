@@ -23,6 +23,79 @@ export const getTask = async (req, res) => {
     }
 };
 
+export const getTasksByStatus = async (req, res) => {
+    try {
+        const { status } = req.params;
+        const tasks = await Task.find({ status });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getTasksByPriority = async (req, res) => {
+    try {
+        const { priority } = req.params;
+        const tasks = await Task.find({ priority });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getTasksByCompletion = async (req, res) => {
+    try {
+        const { completed } = req.params;
+        const tasks = await Task.find({ completed });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getTasksByDate = async (req, res) => {
+    try {
+        const { dueDate } = req.query;
+        const parsedDueDate = parseSimpleDate(dueDate);
+        if (!parsedDueDate) {
+            return res.status(400).json({ message: "Invalid due date. Use format YYYY-MM-DD" });
+        }
+        const tasks = await Task.find({ dueDate: parsedDueDate });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getTasksByCreationDate = async (req, res) => {
+    try {
+        const { createdAt } = req.query;
+        const parsedCreatedAt = parseSimpleDate(createdAt);
+        if (!parsedCreatedAt) {
+            return res.status(400).json({ message: "Invalid creation date. Use format YYYY-MM-DD" });
+        }
+        const tasks = await Task.find({ createdAt: parsedCreatedAt });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getTasksInDateRange = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query;
+        const tasks = await Task.find({
+            dueDate: {
+                $gte: startDate,
+                $lte: endDate,
+            },
+        });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const createTask = async (req, res) => {
     try {
         const { dueDate, ...rest } = req.body;
