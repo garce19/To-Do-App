@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/garce19/To-Do-App/issues"
   },
-  "homepage": "https://github.com/garce19/To-Do-App#readme"
+  "homepage": "https://github.com/garce19/To-Do-App#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
