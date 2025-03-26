@@ -45,7 +45,13 @@ export const getTasksByPriority = async (req, res) => {
 
 export const getTasksByCompletion = async (req, res) => {
     try {
-        const { completed } = req.params;
+        let { completed } = req.query;
+        
+        if (completed === undefined) {
+            return res.status(400).json({ message: "Please provide a completion status" });
+        }
+
+        completed = completed === 'true';
         const tasks = await Task.find({ completed });
         res.status(200).json({ tasks });
     } catch (error) {

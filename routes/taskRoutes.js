@@ -4,10 +4,10 @@ import * as taskController from '../controllers/taskController.js';
 const router = Router();
 
 router.get('/', taskController.getTasks);
-router.get("/:id", taskController.getTask);
 router.get("/status/:status", taskController.getTasksByStatus);
+router.get("/:id", taskController.getTask);
 router.get("/priority/:priority", taskController.getTasksByPriority);
-router.get("/completed/:completed", taskController.getTasksByCompletion);
+router.get("/completed", taskController.getTasksByCompletion);
 router.get("/date", taskController.getTasksByDate);
 router.get("/date/:dueDate", taskController.getTasksByDate);
 router.get("/date/:createdAt", taskController.getTasksByCreationDate);
